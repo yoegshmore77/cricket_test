@@ -1,0 +1,22 @@
+{
+  "name": "cricket-one-to-many",
+  "version": "1.0.0",
+  "description": "Cricket-One-To-Many",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Yogesh More",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "http": "0.0.0",
+    "socket.io": "^1.7.1"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "keywords": [],
+  "devDependencies": {}
+}
