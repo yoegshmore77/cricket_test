@@ -1,0 +1,457 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    background: #000000;
+}
+
+/* MOBILE */
+
+.optionsContainer{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,.8);
+    z-index: 1;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    color: #fff;
+}
+.optionsContainer a {
+    background: #fff;
+    margin: 0 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+.loginOptions {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: rgba(0,0,0,.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.loginOptions a {
+    background: #fff;
+    margin: 0 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+.login-form {
+    display: flex;
+    flex-direction: column;
+    background: #ccc;
+    width: 80%;
+    margin: 0 auto;
+    align-items: center;
+    padding: 40px 20px;
+}
+.inputField {
+    margin: 10px 0;
+}
+.login-form input {
+    display: block;
+    outline: 0;
+    padding: 10px;
+    border-radius: 5px;
+    background: #b7b3b3;
+    border: 1px solid #757474;
+}
+.errorMessage {
+    font-size: 12px;
+    color: red;
+}
+#container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow-x: hidden;
+}
+
+#container p {
+    margin: 0;
+    font-size: 32px;
+    color: white;
+    text-align: center;
+}
+
+#codeInput {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#codeInput input {
+    width: 50px;
+    height: 74px;
+    margin: 4px 12px;
+    text-align: center;
+    font-size: 64px;
+    color: white;
+    background: rgba(0, 0, 0, 0);
+    outline: none;
+    transition: height 1s;
+    -webkit-transition: height 1s;
+    border: none;
+    border-bottom: 4px solid white;
+}
+
+#inputContainer {
+    position: relative;
+    width: 100%;
+}
+
+#howToPlayContainer {
+    position: absolute;
+    left: 100vw;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+canvas {
+    display: none;
+    position: absolute;
+    left: 100vw;
+}
+#run-id {
+    position: absolute;
+    color: #cbdb2a;
+    z-index: 1;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+}
+#balls-left{
+    position: absolute;
+    color: #cbdb2a;
+    z-index: 1;
+    top: 15%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+#missed-id {
+    position: absolute;
+    color: #cbdb2a;
+    z-index: 1;
+    top: 20px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+    font-size: 15px;
+}
+.montserrat {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.roboto {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* css start by atul 20-03-2019 */
+
+@font-face {
+    font-family:'Nexa Rust Slab Black Shadow 01';
+    src: url('../fonts/Nexa Rust Slab Black Shadow 01.eot');
+	src: url('../fonts/Nexa Rust Slab Black Shadow 01.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/Nexa Rust Slab Black Shadow 01.woff2') format('woff2'),
+		url('../fonts/Nexa Rust Slab Black Shadow 01.woff') format('woff'),
+		url('../fonts/Nexa Rust Slab Black Shadow 01.svg#Nexa Rust Slab Black Shadow 01') format('svg');
+    font-weight: 900;
+    font-style: normal;
+    font-stretch: normal;
+    unicode-range: U+0020-00FE;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+/* font-family: 'Open Sans', sans-serif; */
+*{box-sizing: border-box; margin: 0; padding: 0; font-family: 'Open Sans', sans-serif;}
+
+body{position: relative;}
+
+#container{background-image: url(../images/bgImg.jpg); background-repeat: repeat; background-color: transparent;}
+#container img{
+    max-width: 200px;
+    margin: 0 auto;
+}
+.logoWrap{width:70px; position: absolute; top:10px; left:10px; z-index: 2;}
+#container #inputContainer .copyText span {
+    color: #c5de3c;
+}
+#container #inputContainer .copyText {
+    font-size: 17px;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    padding: 0 15px;
+    word-break: break-word;
+    line-height: 25px;
+}
+#container #inputContainer #codeInput{width: 100%;}
+#container #inputContainer{bottom: -45px; left: 0;}
+#container #inputContainer .blackPatch{
+    width: 100%;
+    max-width: 90%;
+    display: inline-block;
+    background-color: #000;
+    left: 50%;
+    position: relative;
+    transform: translateX(-50%);
+    border: 1px solid #34393c;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    margin: 25px 0 0;
+    padding: 70px 0;
+}
+#container #inputContainer .enterHere{font-size: 12px; line-height: 18px; width: 100%; float: left; text-align: center; color: #6f6f6f; margin: 10px 0 0;}
+#container #inputContainer .unique_code{
+    width: 100%;
+    text-align: center;
+    color: #cbdb2a;
+    position: absolute;
+    top: -12px;
+}
+/* #container #inputContainer #codeInput{margin: 20vh 0 0;} */
+#codeInput input{border-radius:0;box-shadow: none;border:none;outline:0;-webkit-appearance: none;border-bottom: 2px solid #fab816;}
+
+/* #container .howToPlayContainer{left: 0} */
+#container .howToPlayContainer{
+    width: 100%;
+    text-align: center;
+    height: calc(100% - 70px);
+}
+#container .howToPlayContainer .steps_Wrap{width: 100%; float: left;}
+#container .howToPlayContainer .steps_Wrap > div{width: 100%; float: left; list-style-type: none; margin: 6px 0;}
+#container .howToPlayContainer .steps_Wrap > div .innerWrap{
+    width: 100%;
+    /* float: right; position: relative; top: 0; left: 8px; */
+}
+#container .howToPlayContainer .steps_Wrap > div .iconImg{width:60px; height: 60px; display: inline-block; vertical-align: middle; background-color: #20c4f4; border-radius: 50%; -webkit-border-radius: 50%; position: relative; left: 30px;}
+#container .howToPlayContainer .steps_Wrap > div .stepContent{width:calc(100% - 67px); display: inline-block; vertical-align: middle; background-color: #000000; padding: 10px 10px 10px 40px; border-radius: 10px; border: 1px solid #34393c; color: #fff;}
+.steps_Wrap .h3 {
+    font-family: 'Nexa Rust Slab Black Shadow 01';
+    font-size: 14px;
+    line-height: 21px;
+    text-align: center;
+    color: #fff;
+}
+#container .howToPlayContainer .steps_Wrap > div .stepContent p{font-size: 12px; line-height: 18px; width: 100%; float: left; color: rgba(255,255,255,0.5); text-align: left; margin:2px 0 0;}
+#container .howToPlayContainer .noteText{
+    font-size: 11px;
+    line-height: 18px;
+    font-style: italic;
+    color: #cbdb2a;
+    width: 70%;
+    text-align: center;
+    margin: 0;
+}
+#container .howToPlayContainer .ok_Btn{width: 100%; float: left; text-align: center; margin: 10px 0;}
+#container .howToPlayContainer .ok_Btn img{max-width:80px;}
+
+.slick-dots {
+    margin: 20px 0;
+}
+.slick-dots li {
+    display: inline-block;
+    margin: 0 10px;
+}
+.slick-dots button {
+    border: 1px solid #000;
+    border-radius: 50%;
+    background: #20c4f4;
+    height: 30px;
+    width: 30px;
+    font-family: 'Nexa Rust Slab Black Shadow 01';
+    opacity: .5;
+    outline: 0;
+}
+.slick-dots .slick-active button{
+    opacity: 1;
+}
+.slick-slide{
+    outline: 0;
+}
+.next_ball_Screen{width: 100%; float: left; position: relative; top: 0; left: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; z-index: 1; text-align: center;}
+.next_ball_Screen .screen_Wrap{width:90%; display: inline-block; position: relative; top: 54%; left: 50%; transform:translate(-50%, -50%); -webkit-transform:translate(-50%, -50%); float: left;}
+.next_ball_Screen .screen_Wrap .run_Content{width: 100%; height: 320px; border-radius: 10px; border: 1px solid #34393c; overflow: hidden; background-color: #000;}
+.next_ball_Screen .screen_Wrap .run_Content .firstCol{width: 100%; float: left; padding: 30px 0; position: relative; height: 50%;}
+.next_ball_Screen .screen_Wrap .run_Content .secondCol{width: 100%; float: left; padding: 34px 0; position: relative; height: 50%; background-color: #20c4f4;}
+.next_ball_Screen .screen_Wrap .run_Content .firstCol .score{width: 44%; float: left; text-align: right; padding-right: 20px;}
+.next_ball_Screen .screen_Wrap .run_Content .firstCol .score span{font-size: 110px; line-height: 100px; color: #cbdb2a; font-family:'Nexa Rust Slab Black Shadow 01'; display: inline-block;}
+.next_ball_Screen .screen_Wrap .run_Content .firstCol .scoreContent{width: 50%; float: left; color: #fff; margin: 12px 0 0;}
+.next_ball_Screen .screen_Wrap .run_Content .firstCol .scoreContent .h2{font-family:'Nexa Rust Slab Black Shadow 01'; font-size: 32px; line-height: 30px; width: 100%; float: left; position: relative; margin:0 0 16px; text-align: left;}
+.next_ball_Screen .screen_Wrap .run_Content .firstCol .scoreContent .h2:after{content: ''; width:80%; height: 2px; background-color: #fff; position: absolute; bottom: -10px; left: 0;}
+.next_ball_Screen .screen_Wrap .run_Content .firstCol .scoreContent .h3{font-family:'Nexa Rust Slab Black Shadow 01'; font-size: 14px; line-height: 21px; width: 100%; float: left; position: relative; text-align: left}
+.next_ball_Screen .screen_Wrap .run_Content .secondCol ul{width: 100%; float: left;}
+.next_ball_Screen .screen_Wrap .run_Content .secondCol ul li{width: 50%; float: left; list-style-type: none; text-align: center;}
+.next_ball_Screen .screen_Wrap .run_Content .secondCol ul li .iconImg{width: 100%; float: left; text-align: center;}
+.next_ball_Screen .screen_Wrap .run_Content .secondCol ul li .speedText{font-size: 12px; line-height: 16px; text-align: center; font-weight: 400; margin: 4px 0 0; display: inline-block;}
+.next_ball_Screen .screen_Wrap .run_Content .secondCol ul li .speedText strong{display: block; text-align: center;}
+.next_ball_Screen .screen_Wrap .run_Content .secondCol ul li:first-child{border-right: 1px solid #000;}
+.next_ball_Screen .screen_Wrap .nextBtn{width: 100%; float: left; text-align: center; margin:30px 0 0;}
+
+
+
+.optionsContainer.scored_Rank{background-color: transparent;}
+.optionsContainer.scored_Rank .innerWrap{width:90%;}
+.optionsContainer.scored_Rank .innerWrap .run_Content{width: 100%; border-radius: 10px; border: 1px solid #34393c; overflow: hidden; background-color: #000;}
+.optionsContainer.scored_Rank .innerWrap .run_Content abbr{
+    font-family: 'Nexa Rust Slab Black Shadow 01';
+    font-size: 100px;
+    line-height: 90px;
+    text-align: center;
+    color: #cbdb2a;
+}
+.optionsContainer.scored_Rank .innerWrap .run_Content .title{font-family:'Nexa Rust Slab Black Shadow 01'; font-size: 14px; line-height: 21x; text-align: center; width: 100%; float: left; margin: 0 0 10px;}
+.optionsContainer.scored_Rank .innerWrap .run_Content .firstCol{
+    width: 100%;
+    display: flex;
+    padding: 20px 0;
+    position: relative;
+    flex-direction: column;
+}
+.optionsContainer.scored_Rank .innerWrap .run_Content .secondCol{width: 100%; float: left; padding: 20px 0; position: relative; height: 50%; background-color: #20c4f4;}
+.optionsContainer.scored_Rank .innerWrap .run_Content .secondCol abbr em{font-family: 'Open Sans', sans-serif; font-weight: 700; position: relative; left: -4px;}
+.optionsContainer.scored_Rank .innerWrap .run_Content .secondCol abbr{color: #000;}
+.optionsContainer.scored_Rank .innerWrap p{width: 100%; float: left; font-size: 12px; line-height: 16px; padding: 0 20px; margin: 20px 0 10px; text-align: center;}
+.optionsContainer.scored_Rank a#submit-score{padding: 0; margin: 0; background-color: transparent; background: transparent; border-radius: 0; float: left; width: 100%; text-align: center;}
+#play-reset, #thank-play-reset{background-color: transparent; background: transparent; color: #cbdb2a; font-weight: 600; float: left; width: 100%; text-align: center; margin: 10px 0 0; padding: 0}
+
+
+
+.login_Two_Options{background-color: transparent; background: transparent;}
+/* .login_Two_Options .innerWrap{width:90%; float: left; position: relative; top: 54%; left: 50%; transform:translate(-50%, -50%); -webkit-transform:translate(-50%, -50%);} */
+.login_Two_Options .innerWrap p{width: 100%; float: left; font-size: 12px; line-height: 16px; color: #fff; text-align: center; padding: 0 70px;}
+.login_Two_Options .innerWrap .login-form{background-color: transparent; padding: 0; width: 100%;}
+.login_Two_Options .innerWrap .login-form .inputField{ width: 100%; float: left; margin: 8px 0;}
+.login_Two_Options .innerWrap .login-form input{width: 100%; background-color: transparent; border: 0; border-radius: 0; border-bottom: 1px solid #20c4f4; padding: 5px 0; color: #fff; font-family: 'Open Sans', sans-serif; font-size: 12px; line-height: 18px;}
+.login_Two_Options .innerWrap .login-form input::-webkit-input-placeholder {color:#fff;}
+.login_Two_Options .innerWrap .login-form input::-moz-placeholder {color:#fff;}
+.login_Two_Options .innerWrap .login-form input:-ms-input-placeholder {color:#fff;}
+.login_Two_Options .innerWrap .login-form input:-moz-placeholder {color:#fff;}
+.login_Two_Options #submit-form{background: transparent; margin:10px 0; padding: 0; border-radius: 0;}
+.login_Two_Options .innerWrap .or{width: 100%; float: left; margin: 10px 0; text-align: center; color: #fff; font-weight: 700; color: #20c4f4;}
+.login_Two_Options .innerWrap .loginVia{width: 100%; float: left; text-align: center; margin: 20px 0}
+.login_Two_Options .innerWrap .loginVia li{width: auto; float: none; display: inline-block; vertical-align: middle; margin: 0 5px;}
+.login_Two_Options .innerWrap .loginVia li a{margin: 0; padding: 0; background-color: transparent; color: #fff; text-decoration: none; font-size: 12px; line-height: 16px; display: inline-block;}
+.login_Two_Options .innerWrap .guestUser{font-size: 14px; line-height: 22px; font-weight: 700; text-decoration: underline; text-transform: uppercase; color: #cbdb2a; padding: 0; margin: 0; background-color: transparent; width: 100%; float: left; text-align: center;}
+.login_Two_Options .innerWrap .noteText{
+    font-size: 12px;
+    line-height: 18px;
+    font-style: italic;
+    color: #cbdb2a;
+    text-align: left;
+    padding: 0 15px;
+    display: block;
+}
+
+
+
+.thank_You{background-color: transparent; background: transparent; position: relative; top: 0; left: 0; height: 100vh; z-index: 1;}
+.thank_You .innerWrap{width:90%; float: left; position: relative; top: 54%; left: 50%; transform:translate(-50%, -50%); -webkit-transform:translate(-50%, -50%);}
+.thank_You .innerWrap .h2{width: 100%; float: left; text-align: center; font-family:'Nexa Rust Slab Black Shadow 01'; font-size: 34px; line-height:30px; color: #fff;}
+.thank_You .innerWrap p{font-size: 12px; line-height: 18px; text-align: center; color: #fff; width: 100%; float: left; margin:20px 0;}
+.thank_You .innerWrap a#play-reset{background-color: transparent; background: transparent; color: #cbdb2a; font-weight: 600; float: left; width: 100%; text-align: center; margin:0; padding: 0}
+
+/* css end by atul 20-03-2019 */
+.loginOptions #login-wrap {
+    width: 80%;
+    position: relative;
+    right: 0;
+    margin: 0 auto;
+}
+.thank-you {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    max-width: 80%;
+}
+.thank-you span {
+    display: block;
+    color: #fff;
+    margin: 0 0 10px;
+    font-size: 30px;
+    font-family: 'Nexa Rust Slab Black Shadow 01';
+    text-align: center;
+}
+#rank, #weeklyScore, #overScore {
+    color: #fff;
+    text-align: center;
+    font-size: 11px;
+    margin: 10px 0 0;
+}
+#rank.span, #weeklyScore.span, #overScore.span{
+    color: #cbdb2a;
+}
+.logo{
+    display: block;
+    position: absolute;
+    z-index: 2;
+    left: 15px;
+    top: 10px;
+}
+.logo img{
+    max-width: 85px;
+}
+#waiting-screen {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 80%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+#waiting-screen img {
+    max-width: 100%;
+}
+
+#share-score {
+    left: 0;
+    right: 0;
+    margin: 15px auto;
+    text-align: center;
+    color: #cbdb2a;
+    font-family: 'Nexa Rust Slab Black Shadow 01';
+    font-size: 13px;
+    padding: 10px 20px;
+    background: #000;
+    border: 1px solid;
+    border-radius: 10px;
+    text-decoration: none;
+}

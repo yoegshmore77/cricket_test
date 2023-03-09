@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mega Cricket Prototype</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.6/chance.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.6.0/socket.io.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body>
+    <script>
+        var chance = new Chance();
+        var url = 'https://cricketgameonetomany.herokuapp.com/';
+        var userid;
+        var uniqueCode;
+        var isConnected = false;
+        var countdownInterval;
+        var countdown;
+        var isGameStarted = false;
+        var balling = false;
+        var suru = false;
+
+        $(document).ready(function() {
+            userid = generateRandomNumber(10);
+            uniqueCode = generateRandomAlphaNumericString(4);
+            console.log(userid + ' | ' + uniqueCode);
+            $("#uniqueCode").html(uniqueCode);
+
+            for(i=1; i<=6; i++){
+                //$("#bowlingVideo" + i).css('position', 'absolute');
+               // $("#bowlingVideo" + i).css('top', '50%'');
+                //$("#bowlingVideo" + i).css('left', 50%);
+                //$("#bowlingVideo" + i).css('transform', 'translate(-50%, -50%)');
+                $("#bowlingVideo" + i).css('opacity', '0');
+                $("#bowlingVideo" + i).get(0).currentTime = 0;
+            }
+
+                /*$("#adVideo").css('position', 'absolute');
+                $("#adVideo").css('top', 0);
+                $("#adVideo").css('left', 0);*/
+
+                $("#adVideo").css('opacity', '0');
+                $("#adVideo").get(0).currentTime = 0;
+
+                //$("#countdownContainer").css('position', 'absolute');
+                //$("#countdownContainer").css('top', 50%);
+                //$("#countdownContainer").css('left', 50%);
+                $("#countdownContainer").css('opacity', '0');
+                /*$("#countdownContainer").css('transform', 'translate(-50%, -50%)');
+                $("#countdownContainer").css('width', '1280');
+                $("#countdownContainer").css('height', '720');*/
+
+                $("#checkYourPhoneContainer").css('position', 'absolute');
+                $("#checkYourPhoneContainer").css('top', 250);
+                $("#checkYourPhoneContainer").css('left', 500);
+                $("#checkYourPhoneContainer").css('opacity', '0');
+
+
+
+                
+
+                
+
+            initSocketIO();
+            //ballDeliver();
+        });
+
+        function initSocketIO() {
+            console.log('initSocketIO');
+
+            socket = io.connect(url, {
+                'reconnect': true,
+                'reconnection_delay': 5000,
+                'max reconnection attempts': 5
+            });
+
+            // SEND ALL USER DATA TO SERVER
+            socket.on('getData', function(msg) {
+                isConnected = true;
+                console.log('<< Connected.');
+
+                socket.emit('userData', {
+                    userid: userid,
+                    username: 'display',
+                    isMobile: false,
+                    uniqueCode: uniqueCode
+                });
+
+                console.log('>> Sending data.');
+            });
+
+            socket.on('initGame', function(msg) {
+                
+                //socket.emit('sayhi', 'hellooooooo');
+                //setTimeout(function() {
+                    //TweenMax.to($("#landingContainer"), 0.75, { left: -1280, ease: Cubic.easeInOut });
+                    //TweenMax.to($("#howToPlayContainer"), 0.75, { left: 0, ease: Cubic.easeInOut });
+                //}, 750);
+                if(!suru){
+                    console.log('<< Initialise game.......');
+                    console.log('<< suru.......' + suru);
+
+                    suru = true;
+                    ballDeliver();
+                }
+            });
+
+            socket.on('sco', function(sco){
+                //alert('Runs = '+sco);
+                console.log('<< Got the score = Runs = '+ sco);
+            });
+            
+
+            socket.on('nextBall', function() {
+                
+            });
+
+            socket.on('disconnect', function(msg) {
+                isConnected = false;
+            });
+        }
+        var randomVid=1;
+        var ballCount=0;
+
+        function addReset(){
+            ballCount=0;
+            $("#adVideo").css('opacity', '0');
+            $("#adVideo").get(0).currentTime = 0;
+            ballDeliver();
+        }
+
+        function ballDeliver(){
+            if(ballCount>=6){
+                $("#bowlingVideo" + randomVid).get(0).currentTime = 0;
+                $("#bowlingVideo" + randomVid).css('opacity', '0');
+                //ballCount=0;
+                
+                $("#adVideo").css('opacity', '1');
+                $("#adVideo").get(0).currentTime = 0;
+                $("#adVideo").get(0).play();
+
+
+                
+            }else{
+            ballCount ++;
+            
+            $("#bowlingVideo" + randomVid).css('opacity', '0');
+            $("#bowlingVideo" + randomVid).get(0).currentTime = 0;
+             randomVid = Math.floor((Math.random() * 6) + 1);
+            $("#bowlingVideo" + randomVid).css('opacity', '1');
+            balling = true;
+            countdown = 5;
+            $("#countdown").html(countdown);
+            TweenMax.to($("#countdownContainer"), 0.5, { opacity: 1, ease: Cubic.easeOut });
+
+            var timestamp;
+            $.get("timestamp.php", function(data, status) {
+                    timestamp = data +'|'+ ballCount;
+
+                    console.log('<< Timestamp: ' + timestamp + ' >>');
+                    //socket.emit('timestamp', timestamp);
+
+            
+            countdownInterval = setInterval(function() {
+                        countdown -= 1;
+                        $("#countdown").html(countdown);
+
+                        if (countdown == 2) {
+                            clearInterval(countdownInterval);
+
+                            TweenMax.to($("#lightbox"), 0.5, { opacity: 0, ease: Cubic.easeIn, onComplete: function() {
+                                $("#checkYourPhoneContainer").css('opacity', 1);
+                                balling = false;
+
+                            }});
+                            socket.emit('timestamp', timestamp);
+                            $("#bowlingVideo" + randomVid).get(0).play();
+                            
+                            //$("#bowlingVideo" + randomVid).on('ended',function(){
+
+                               /* $("#bowlingVideo" + randomVid).bind('ended',function(){
+                                     $("#bowlingVideo" + randomVid).unbind('ended');
+                                //alert('Video has ended!');
+                                $("#countdownContainer").css('opacity', '0');
+                                TweenMax.to($("#checkYourPhoneContainer"), 0.5, { opacity: 0, ease: Cubic.easeIn, delay: 2, onComplete: function() { ballDeliver();}});
+                                });*/
+
+
+                            setTimeout(function() {
+                                
+                                $("#countdownContainer").css('opacity', '0');
+                                TweenMax.to($("#lightbox"), 0.5, { opacity: 1, ease: Cubic.easeOut, onComplete: function() {
+                                    //$("#bowlingVideo" + randomVid).get(0).currentTime = 0;
+                                    //$("#bowlingVideo" + randomVid).css('opacity', '0');
+                                    //ballDeliver();
+                                    TweenMax.to($("#checkYourPhoneContainer"), 0.5, { opacity: 0, ease: Cubic.easeIn, delay: 2, onComplete: function() { ballDeliver();}});
+                                }});
+                                
+                            }, 10000);//10000
+
+                        }
+
+                    }, 1000);
+
+            });
+        }
+        }
+
+        function generateRandomNumber(length) {
+            return Math.floor(Math.pow(10, length-1) + Math.random() * 9 * Math.pow(10, length-1));
+        }
+
+        function generateRandomAlphaNumericString(length) {
+            return Math.random().toString(36).substr(2, length);
+        }
+        //onended = "ballDeliver()"
+    </script>
+            <div class="mainWrapperDiv1">
+                <div id="header" class="montserrat">
+                 <img src="images/branding.png" alt="" width="20%"> 
+                <p id="headerCopy">MEGA CRICKET PROTOTYPE</p>
+                </div>
+            </div>
+
+    <div class="mainWrapperDiv">
+		<div id="container">
+			 <!--<div id="header" class="montserrat">
+				 <img src="images/v-logo.png" alt=""> 
+				<p id="headerCopy">MEGA CRICKET PROTOTYPE</p>
+			</div>-->
+
+			<div id="body">
+				<video id="adVideo" width="1280" height="720" muted onended="addReset()">
+					<source src="images/Ad1.mp4" type="video/mp4">
+				</video>
+				<video id="bowlingVideo1" width="1280" height="720" muted>
+					<source src="images/bowler1.mp4" type="video/mp4">
+				</video>
+				<video id="bowlingVideo2" width="1280" height="720" muted>
+					<source src="images/bowler2.mp4" type="video/mp4">
+				</video>
+				<video id="bowlingVideo3" width="1280" height="720" muted>
+					<source src="images/bowler3.mp4" type="video/mp4">
+				</video>
+				<video id="bowlingVideo4" width="1280" height="720" muted>
+					<source src="images/bowler4.mp4" type="video/mp4">
+				</video>
+				<video id="bowlingVideo5" width="1280" height="720" muted>
+					<source src="images/bowler5.mp4" type="video/mp4">
+				</video>
+				<video id="bowlingVideo6" width="1280" height="720" muted>
+					<source src="images/bowler6.mp4" type="video/mp4">
+				</video>
+				
+				<div id="lightbox" class="montserrat">                
+					<div id="howToPlayContainer">
+						<img src="images/howToPlay.png">
+					</div>
+					<div id="checkYourPhoneContainer">
+						<img src="images/checkYourPhone.png">
+					</div>
+					<div id="countdownContainer">
+						<p>next delivery in</p>
+						<p id="countdown">5</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<style>
+		.mainWrapperDiv{width:1280px;height:720px;margin:0 auto;position:relative;top:50%;transform: translateY(-50%);-webkit-transform: translateY(-50%);overflow:hidden}
+		.mainWrapperDiv video{width:inherit;height:inherit;position:fixed;top:0;left:0}
+		video{transition:all 0.6s linear;-webkit-transition:all 0.6s linear;}
+		#lightbox{background:rgba(0,0,0,0.5);}
+		#countdownContainer{position:fixed;top:50%;left:50%;transform: translate(-50%,-50%);-webkit-transform: translate(-50%,-50%);width:inherit;height:inherit;}
+        .mainWrapperDiv1{width:1280px;height:60px;margin:0 auto;position:relative;top:16%;transform: translateY(-16%);-webkit-transform: translateY(-16%);overflow:hidden}
+	</style>
+</body>
+</html>
