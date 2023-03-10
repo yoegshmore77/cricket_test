@@ -92,7 +92,7 @@
                     uniqueCode: uniqueCode
                 });
 
-                console.log('>> Sending data.');
+                console.log('>> Sending data. uniqueCode =' + uniqueCode);
             });
 
             socket.on('initGame', function(msg) {
@@ -160,8 +160,10 @@
             TweenMax.to($("#countdownContainer"), 0.5, { opacity: 1, ease: Cubic.easeOut });
 
             var timestamp;
-            $.get("timestamp.php", function(data, status) {
-                    timestamp = data +'|'+ ballCount;
+            //--y--//$.get("timestamp.php", function(data, status) {
+                    //--y--//timestamp = data +'|'+ ballCount;
+
+                    timestamp = Date.now() + ballCount;
 
                     console.log('<< Timestamp: ' + timestamp + ' >>');
                     //socket.emit('timestamp', timestamp);
@@ -208,7 +210,7 @@
 
                     }, 1000);
 
-            });
+            //--y--//});
         }
         }
 
