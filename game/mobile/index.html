@@ -12,10 +12,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" itemprop="description" content="Too Yumm provides a whole new range of baked chips products that are low on calories. Too Yumm chips available in 5 different tasty flavours." />
-    <meta name="keywords"  content="too yumm, snack foods, healthy snack foods" />
+    <meta name="description" itemprop="description" content="#GulabiDILKhelega" />
+    <meta name="keywords"  content="#GulabiDILKhelega" />
 
-    <title>GAME</title>
+    <title>#GulabiDILKhelega</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/slick.css">
@@ -96,8 +96,8 @@
 
 	<input type="hidden" id="newtoken">
     <input type="hidden" id="total-score-to-share" />
-    <a href="https://www.tooyumm.com" title="Too Yumm!" class="logo">
-        <!--<img src="images/logo.png" alt="Too Yumm!" />-->
+    <a href="#" title="#GulabiDILKhelega" class="logo">
+        <img src="images/logo.png" alt="#GulabiDILKhelega" />
     </a>
     <div id="container">
          <div id="inputContainer">
@@ -251,7 +251,7 @@
                 </div> -->
             </div>    
             
-            <p>Submit your score to win tickets, merch and Too Yumm! packs or try again!</p>
+            <p>Submit your score to win tickets.<!--, merch and #GulabiDILKhelega packs or try again!--></p>
             <a id="submit-score" href="javascript:void(0);"></a>
             <a id="play-reset" class="play-reset" href="javascript:void(0);">Play again</a>
         </div>
@@ -260,7 +260,7 @@
     <!-- Login options -->
     <div class="loginOptions login_Two_Options" style="left:-100%;">
         <div class="innerWrap" id="login-wrap" style="left: -200%">
-            <p>Submit your score to win tickets, merch and Too Yumm! packs or try again!</p>
+            <p>Submit your score to win tickets<!--, merch and #GulabiDILKhelega packs or try again!--></p>
             <form class="login-form" type="submit">
                 <div class="inputField">
                     <input id="name-input" required type="text" placeholder="Name" />
@@ -323,7 +323,7 @@
     var currentServerTimestamp, timestamp, hitTimestamp;
 
     function initSocketIO() {
-         console.log('initSocketIO');
+        // console.log('initSocketIO');
 
         socket = io.connect(url, {
             'reconnect': true,
@@ -334,7 +334,7 @@
         // SEND ALL USER DATA TO SERVER
         socket.on('getData', function(msg) {
             isConnected = true;
-             console.log('<< getData.');
+            // console.log('<< Connected.');
 
             socket.emit('userData', {
                 userid: userid,
@@ -343,7 +343,7 @@
                 uniqueCode: uniqueCode
             });
 
-             console.log('>> Sending data. uniqueCode'+ uniqueCode);
+            // console.log('>> Sending data.');
         });
 
         socket.on('incorrectCode', function() {
@@ -359,11 +359,11 @@
         });
 
         socket.on('connected', function() {
-             console.log('<< Connected.');
+            // console.log('<< Connected.');
         });
 
         socket.on('initGame', function(msg) {
-             console.log('<< Initialise game.');
+            // console.log('<< Initialise game.');
 
             $("#title").html('< CONNECTED >');
 
