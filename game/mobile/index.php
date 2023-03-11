@@ -1,10 +1,10 @@
 <?php 
-    /*session_start();
+    session_start();
     require_once '../tooyum_cricket/config/config.php';
 	
 	
 			$useragent=$_SERVER['HTTP_USER_AGENT'];
-
+/*
 if(preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|
 
 midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|
@@ -33,19 +33,19 @@ vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw
 
 
 }else{
-	//header('Location: http://secure.socialdeal4u.com/tooyumm/kararestrikers/mobile/');
+	header('Location: http://secure.socialdeal4u.com/tooyumm/kararestrikers/mobile/');
 	//exit();
 }
-
+*/
    unset($_SESSION['token']);
     if(!isset($_SESSION['token'])){
         $cexecute = file_get_contents(MYWEBSITE."tooyum_cricket/ajax/view.php?action=requesttoken");
         $result = json_decode($cexecute,true);
         $_SESSION['token'] = md5("TYC_".$result['token']);
        
-       }*/
-// echo $_SESSION['token'];
-        //echo $_SESSION['token'];
+       }
+//echo $_SESSION['token'];
+       //echo $_SESSION['token'];
         
 
         
@@ -63,10 +63,10 @@ vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" itemprop="description" content="Too Yumm provides a whole new range of baked chips products that are low on calories. Too Yumm chips available in 5 different tasty flavours." />
-    <meta name="keywords"  content="too yumm, snack foods, healthy snack foods" />
+    <meta name="description" itemprop="description" content="#GulabiDILKhelega" />
+    <meta name="keywords"  content="#GulabiDILKhelega" />
 
-    <title>Too yumm! Karare Strikers</title>
+    <title>#GulabiDILKhelega</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/slick.css">
@@ -147,8 +147,8 @@ vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw
 
 	<input type="hidden" id="newtoken">
     <input type="hidden" id="total-score-to-share" />
-    <a href="https://www.tooyumm.com" title="Too Yumm!" class="logo">
-        <!--<img src="images/logo.png" alt="Too Yumm!" />-->
+    <a href="#" title="#GulabiDILKhelega" class="logo">
+        <img src="images/logo.png" alt="#GulabiDILKhelega" />
     </a>
     <div id="container">
          <div id="inputContainer">
@@ -302,7 +302,7 @@ vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw
                 </div> -->
             </div>    
             
-            <p>Submit your score to win tickets, merch and Too Yumm! packs or try again!</p>
+            <p>Submit your score to win tickets.<!--, merch and #GulabiDILKhelega packs or try again!--></p>
             <a id="submit-score" href="javascript:void(0);"></a>
             <a id="play-reset" class="play-reset" href="javascript:void(0);">Play again</a>
         </div>
@@ -311,7 +311,7 @@ vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw
     <!-- Login options -->
     <div class="loginOptions login_Two_Options" style="left:-100%;">
         <div class="innerWrap" id="login-wrap" style="left: -200%">
-            <p>Submit your score to win tickets, merch and Too Yumm! packs or try again!</p>
+            <p>Submit your score to win tickets<!--, merch and #GulabiDILKhelega packs or try again!--></p>
             <form class="login-form" type="submit">
                 <div class="inputField">
                     <input id="name-input" required type="text" placeholder="Name" />

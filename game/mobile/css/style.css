@@ -134,7 +134,7 @@ canvas {
 }
 #run-id {
     position: absolute;
-    color: #cbdb2a;
+    color: #ea1b85;
     z-index: 1;
     top: 50%;
     transform: translateY(-50%);
@@ -147,7 +147,7 @@ canvas {
 }
 #balls-left{
     position: absolute;
-    color: #cbdb2a;
+    color: #ea1b85;
     z-index: 1;
     top: 15%;
     left: 0;
@@ -163,7 +163,7 @@ canvas {
 }
 #missed-id {
     position: absolute;
-    color: #cbdb2a;
+    color: #ea1b85;
     z-index: 1;
     top: 20px;
     left: 0;
@@ -241,7 +241,7 @@ body{position: relative;}
 #container #inputContainer .unique_code{
     width: 100%;
     text-align: center;
-    color: #cbdb2a;
+    color: #ea1b85;
     position: absolute;
     top: -12px;
 }
@@ -274,7 +274,7 @@ body{position: relative;}
     font-size: 11px;
     line-height: 18px;
     font-style: italic;
-    color: #cbdb2a;
+    color: #ea1b85;
     width: 70%;
     text-align: center;
     margin: 0;
@@ -311,7 +311,7 @@ body{position: relative;}
 .next_ball_Screen .screen_Wrap .run_Content .firstCol{width: 100%; float: left; padding: 30px 0; position: relative; height: 50%;}
 .next_ball_Screen .screen_Wrap .run_Content .secondCol{width: 100%; float: left; padding: 34px 0; position: relative; height: 50%; background-color: #20c4f4;}
 .next_ball_Screen .screen_Wrap .run_Content .firstCol .score{width: 44%; float: left; text-align: right; padding-right: 20px;}
-.next_ball_Screen .screen_Wrap .run_Content .firstCol .score span{font-size: 110px; line-height: 100px; color: #cbdb2a; font-family:'Nexa Rust Slab Black Shadow 01'; display: inline-block;}
+.next_ball_Screen .screen_Wrap .run_Content .firstCol .score span{font-size: 110px; line-height: 100px; color: #ea1b85; font-family:'Nexa Rust Slab Black Shadow 01'; display: inline-block;}
 .next_ball_Screen .screen_Wrap .run_Content .firstCol .scoreContent{width: 50%; float: left; color: #fff; margin: 12px 0 0;}
 .next_ball_Screen .screen_Wrap .run_Content .firstCol .scoreContent .h2{font-family:'Nexa Rust Slab Black Shadow 01'; font-size: 32px; line-height: 30px; width: 100%; float: left; position: relative; margin:0 0 16px; text-align: left;}
 .next_ball_Screen .screen_Wrap .run_Content .firstCol .scoreContent .h2:after{content: ''; width:80%; height: 2px; background-color: #fff; position: absolute; bottom: -10px; left: 0;}
@@ -334,7 +334,7 @@ body{position: relative;}
     font-size: 100px;
     line-height: 90px;
     text-align: center;
-    color: #cbdb2a;
+    color: #ea1b85;
 }
 .optionsContainer.scored_Rank .innerWrap .run_Content .title{font-family:'Nexa Rust Slab Black Shadow 01'; font-size: 14px; line-height: 21x; text-align: center; width: 100%; float: left; margin: 0 0 10px;}
 .optionsContainer.scored_Rank .innerWrap .run_Content .firstCol{
@@ -349,7 +349,7 @@ body{position: relative;}
 .optionsContainer.scored_Rank .innerWrap .run_Content .secondCol abbr{color: #000;}
 .optionsContainer.scored_Rank .innerWrap p{width: 100%; float: left; font-size: 12px; line-height: 16px; padding: 0 20px; margin: 20px 0 10px; text-align: center;}
 .optionsContainer.scored_Rank a#submit-score{padding: 0; margin: 0; background-color: transparent; background: transparent; border-radius: 0; float: left; width: 100%; text-align: center;}
-#play-reset, #thank-play-reset{background-color: transparent; background: transparent; color: #cbdb2a; font-weight: 600; float: left; width: 100%; text-align: center; margin: 10px 0 0; padding: 0}
+#play-reset, #thank-play-reset{background-color: transparent; background: transparent; color: #ea1b85; font-weight: 600; float: left; width: 100%; text-align: center; margin: 10px 0 0; padding: 0}
 
 
 
@@ -368,12 +368,12 @@ body{position: relative;}
 .login_Two_Options .innerWrap .loginVia{width: 100%; float: left; text-align: center; margin: 20px 0}
 .login_Two_Options .innerWrap .loginVia li{width: auto; float: none; display: inline-block; vertical-align: middle; margin: 0 5px;}
 .login_Two_Options .innerWrap .loginVia li a{margin: 0; padding: 0; background-color: transparent; color: #fff; text-decoration: none; font-size: 12px; line-height: 16px; display: inline-block;}
-.login_Two_Options .innerWrap .guestUser{font-size: 14px; line-height: 22px; font-weight: 700; text-decoration: underline; text-transform: uppercase; color: #cbdb2a; padding: 0; margin: 0; background-color: transparent; width: 100%; float: left; text-align: center;}
+.login_Two_Options .innerWrap .guestUser{font-size: 14px; line-height: 22px; font-weight: 700; text-decoration: underline; text-transform: uppercase; color: #ea1b85; padding: 0; margin: 0; background-color: transparent; width: 100%; float: left; text-align: center;}
 .login_Two_Options .innerWrap .noteText{
     font-size: 12px;
     line-height: 18px;
     font-style: italic;
-    color: #cbdb2a;
+    color: #ea1b85;
     text-align: left;
     padding: 0 15px;
     display: block;
@@ -385,7 +385,7 @@ body{position: relative;}
 .thank_You .innerWrap{width:90%; float: left; position: relative; top: 54%; left: 50%; transform:translate(-50%, -50%); -webkit-transform:translate(-50%, -50%);}
 .thank_You .innerWrap .h2{width: 100%; float: left; text-align: center; font-family:'Nexa Rust Slab Black Shadow 01'; font-size: 34px; line-height:30px; color: #fff;}
 .thank_You .innerWrap p{font-size: 12px; line-height: 18px; text-align: center; color: #fff; width: 100%; float: left; margin:20px 0;}
-.thank_You .innerWrap a#play-reset{background-color: transparent; background: transparent; color: #cbdb2a; font-weight: 600; float: left; width: 100%; text-align: center; margin:0; padding: 0}
+.thank_You .innerWrap a#play-reset{background-color: transparent; background: transparent; color: #ea1b85; font-weight: 600; float: left; width: 100%; text-align: center; margin:0; padding: 0}
 
 /* css end by atul 20-03-2019 */
 .loginOptions #login-wrap {
@@ -416,7 +416,7 @@ body{position: relative;}
     margin: 10px 0 0;
 }
 #rank.span, #weeklyScore.span, #overScore.span{
-    color: #cbdb2a;
+    color: #ea1b85;
 }
 .logo{
     display: block;
@@ -446,7 +446,7 @@ body{position: relative;}
     right: 0;
     margin: 15px auto;
     text-align: center;
-    color: #cbdb2a;
+    color: #ea1b85;
     font-family: 'Nexa Rust Slab Black Shadow 01';
     font-size: 13px;
     padding: 10px 20px;
