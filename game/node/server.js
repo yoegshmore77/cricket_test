@@ -24,18 +24,19 @@ io.on('connection', function(socket){
 		this.uniqueCode = data.uniqueCode;
         this.score = 0;
 
-        if (!this.isMobile) {
+        /*if (!this.isMobile) {
 			console.log('----> Data received from VIEW with userid ' + this.userid + ' & uniqueCode > ' + this.uniqueCode);
             displaysArray.push(this);
         }
         else {
 			console.log('----> Data received from CONTROLLER with userid ' + this.userid + ' & uniqueCode > ' + this.uniqueCode);
-            usersArray.push(this);
+            //usersArray.push(this);-------------y
+            displaysArray.push(this);
 
 			// MAKE CONNECTION
 			var display = objectFindByKey(displaysArray, 'uniqueCode', this.uniqueCode);
 
-			if (display != null && display.status != 'connected') {
+			if (display != null ) {//&& display.status != 'connected' -------y
 				console.log('----> CONTROLLER ' + this.userid + ' paired with VIEW ' + display.userid);
 
 				display.status = 'connected';
@@ -50,19 +51,39 @@ io.on('connection', function(socket){
 
 				socket.emit('incorrectCode');
 			}
-        }
+        }*/
+        io.emit('initGame');
+        //io.emit('nextBall');
+        //socket.join("gameroom");
+        //io.sockets.in("gameroom").emit('connectToRoom', "You are in the room. GameRoom ----------> ");
 	});
 
+	socket.on('sayhi', function(msg){
+		//io.to('gameroom').emit('sayhi', msg);
+		//io.emit('sayhi', msg);
+
+		//socket.emit('sayhi', msg);
+		//socket.broadcast.emit('sayhi', msg);
+	});
 	socket.on('nextBall', function() {
-		this.display.emit('nextBall');
+		//this.display.emit('nextBall');-----y
+		io.emit('nextBall');
+		//socket.emit('nextBall');
+		//socket.broadcast.emit('nextBall');
+		//io.sockets.in("gameroom").emit('nextBall');
+
 	});
 
 	socket.on('timestamp', function(timestamp) {
-		this.player.emit('timestamp', timestamp);
+		//this.player.emit('timestamp', timestamp);-----y
+		//console.log('-------------------------> timestamp called from server');
+		//socket.emit('timestamp', timestamp);
+		io.emit('timestamp', timestamp);
+		//socket.broadcast.emit('timestamp', timestamp);
 	});
 
 	socket.on('sco', function(sco) {
-		this.display.emit('sco',sco);
+		//this.display.emit('sco',sco);
 		//console.log('----> Sco called from server ' + sco);
 	});
 
@@ -172,4 +193,3 @@ function objectFindByKey(array, key, value) {
 
     return null;
 }
-
