@@ -146,10 +146,10 @@ body{
 }
 
 #lightbox {
-    position: absolute;
-    width: 100%;
+    position: relative;
+    width: 1077px;
     overflow: hidden;
-    height: 100%;
+    height:606px;
 }
 
 /* #lightbox p {
