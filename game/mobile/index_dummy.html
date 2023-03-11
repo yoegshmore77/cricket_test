@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta property="og:url"           content="http://istaging2.interactiveavenues.net/rsdemotest/" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="Your Website Title" />
+    <meta property="og:description"   content="Your description" />
+    <meta property="og:image"         content="https://www.your-domain.com/path/image.jpg" />
+    <title>Royal Stag Mega Cricket Prototype</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/gyro.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.6/chance.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.6.0/socket.io.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.4.3/pixi.min.js"></script>
+</head>
+<div id="fb-root"></div>
+<script>
+    window.fbAsyncInit = function() {
+        // FB JavaScript SDK configuration and setup
+        FB.init({
+          appId      : 704410093294618, // FB App ID
+          cookie     : true,  // enable cookies to allow the server to access the session
+          xfbml      : true,  // parse social plugins on this page
+          version    : 'v2.8' // use graph api version 2.8
+        });
+        
+        // Check whether the user already logged in
+        FB.getLoginStatus(function(response) {
+            if (response.status === 'connected') {
+                //display user data
+                getFbUserData();
+            }
+        });
+    };
+    
+    // Load the JavaScript SDK asynchronously
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    
+    // Facebook login with JavaScript SDK
+    function fbLogin() {
+        FB.login(function (response) {
+            if (response.authResponse) {
+                // Get and display the user profile data
+                getFbUserData();
+            } else {
+                document.getElementById('status').innerHTML = 'User cancelled login or did not fully authorize.';
+            }
+        }, {scope: 'email'});
+    }
+    
+    // Fetch the user profile data from facebook
+    function getFbUserData(){
+        FB.api('/me', {locale: 'en_US', fields: 'id,first_name,last_name,email,link,gender,locale,picture'},
+        function (response) {
+            document.getElementById('fbLink').setAttribute("onclick","fbLogout()");
+            document.getElementById('fbLink').innerHTML = 'Logout from Facebook';
+            document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.first_name + '!';
+            document.getElementById('userData').innerHTML = '<p><b>FB ID:</b> '+response.id+'</p><p><b>Name:</b> '+response.first_name+' '+response.last_name+'</p><p><b>Email:</b> '+response.email+'</p><p><b>Gender:</b> '+response.gender+'</p><p><b>Locale:</b> '+response.locale+'</p><p><b>Picture:</b> <img src="'+response.picture.data.url+'"/></p><p><b>FB Profile:</b> <a target="_blank" href="'+response.link+'">click to view profile</a></p>';
+        });
+    }
+    
+    // Logout from facebook
+    function fbLogout() {
+        FB.logout(function() {
+            document.getElementById('fbLink').setAttribute("onclick","fbLogin()");
+            document.getElementById('fbLink').innerHTML = '<img src="fblogin.png"/>';
+            document.getElementById('userData').innerHTML = '';
+            document.getElementById('status').innerHTML = 'You have successfully logout from Facebook.';
+        });
+    }
+    </script>
+<body>
+    <div id="container">
+        <!-- <div id="inputContainer">
+        <p id="title" class="montserrat">ENTER CODE</p>
+        <div id="codeInput">
+            <input id="one" class="roboto" type="text">
+            <input id="two" class="roboto" type="text">
+            <input id="three" class="roboto" type="text">
+            <input id="four" class="roboto" type="text">
+        </div>
+        </div> -->
+        <div id="howToPlayContainer">
+            <img src="images/howToPlay.png">
+            <img id="ok" src="images/ok.png">
+        </div>
+    </div>
+    <!-- To show more options -->
+    <div id="playAgain" class="optionsContainer" style="display:none;">
+        <div id="score-summary"></div>
+        <a id="play-reset" href="javascript:;">Play again</a>
+        <a id="submit-score" href="javascript:;">Submit score</a>
+        <!-- <a href="https://www.facebook.com/sharer/sharer.php?u=example.org" target="_blank">
+        Share on Facebook
+        </a> -->
+    </div>
+
+    <!-- Login options -->
+    <div class="loginOptions" style="display:none;">
+        <a href="javascript:;" onclick="fbLogin()" id="facebook-login" target="_blank">
+            Login using FB
+        </a>
+        Or
+        <form class="login-form" type="submit">
+            <div class="inputField">
+                <input id="name-input" type="text" placeholder="Name" />
+                <span id="name-error" class="errorMessage">Invalid name</span>
+            </div>
+            <div class="inputField">
+                <input id="email-input" type="email" placeholder="Email" />
+                <span id="email-error" class="errorMessage">Invalid email</span>
+            </div>
+            <div class="inputField">
+                <input id="number-input" type="tel" placeholder="Mobile Number" />
+                <span id="number-error" class="errorMessage">Invalid number</span>
+            </div>
+            <a id="submit-form" href="javascript:;">Submit</a>
+        </form>
+    </div>
+    <script>
+    var chance = new Chance();
+    var url = 'https://cricket-test.onrender.com/';
+    var userid;
+    var username;
+    var uniqueCode;
+    var isConnected = false;
+    var delay = 0;
+    var currentServerTimestamp, timestamp, hitTimestamp;
+
+    function initSocketIO() {
+        console.log('initSocketIO');
+
+        socket = io.connect(url, {
+            'reconnect': true,
+            'reconnection_delay': 5000,
+            'max reconnection attempts': 5
+        });
+
+        // SEND ALL USER DATA TO SERVER
+        socket.on('getData', function(msg) {
+            isConnected = true;
+            console.log('<< Connected.');
+
+            socket.emit('userData', {
+                userid: userid,
+                username: username,
+                isMobile: true,
+                uniqueCode: uniqueCode
+            });
+
+            console.log('>> Sending data.');
+        });
+
+        socket.on('incorrectCode', function() {
+            $("#title").html('INCORRECT CODE');
+
+            setTimeout(function() {
+                $("#title").html('ENTER CODE');
+
+                $("#codeInput input").val("");
+                $("#codeInput").css('display', 'flex');
+                $("#codeInput input").eq(0).focus();
+            }, 2500);
+        });
+
+        socket.on('connected', function() {
+            console.log('<< Connected.');
+        });
+
+        socket.on('initGame', function(msg) {
+            console.log('<< Initialise game.');
+
+            $("#title").html('< CONNECTED >');
+
+            setTimeout(function() {
+                //TweenMax.to($("#inputContainer"), 0.75, { left: wid * -1, ease: Cubic.easeInOut });
+                TweenMax.to($("#howToPlayContainer"), 0.75, { left: 0, ease: Cubic.easeInOut });
+            }, 500);
+        });
+        socket.on('sayhi', function(msg) {
+            console.log('<< Hi called ---------------------------->.');
+            //alert(msg);
+        });
+        socket.on('connectToRoom', function(msg) {
+            console.log(msg);
+            //alert(msg);
+        });
+        socket.on('timestamp', function(serverTimestamp) {
+            timingText.text = 'Timestamp';
+            console.log('<< Got the data ---------------------------->.timestamp');
+            $.get("https://www.vibrantjersey.je/ym/timestamp.php", function(data, status) {
+                delay = data - serverTimestamp;
+                currentServerTimestamp = Number(data) - Number(delay);
+                console.log('<< Current Timestamp: ' + currentServerTimestamp + ' >>');
+                console.log('<< Timestamp: ' + serverTimestamp + ' >>');
+                console.log('<<< Delay: ' + delay + 'ms >>>');
+
+                timestamp = Date.now();
+                stopRecording = false;
+
+                // RESET
+                // setTimeout(reset, 10000);
+                setTimeout(function() {
+                    if (!stopRecording) {
+                        stopRecording = true;
+                        //scoreArray.push(0);
+                        noRunArray();
+                        missedGfx.alpha = 1;
+                        //reset();
+                    }
+
+                    TweenMax.to(tryAgainGfx, 0.5, { alpha: 1, ease: Cubic.easeOut, delay: 3 });
+                }, 6000);
+            });
+        });
+
+        socket.on('disconnect', function(msg) {
+            isConnected = false;
+        });
+    }
+
+    function generateRandomNumber(length) {
+        return Math.floor(Math.pow(10, length-1) + Math.random() * 9 * Math.pow(10, length-1));
+    }
+
+    function generateRandomAlphaNumericString(length) {
+        return Math.random().toString(36).substr(2, length);
+    }
+
+    var renderer;
+    var stage;
+    var wid = window.innerWidth;
+    var hei = window.innerHeight;
+    console.log(wid + 'x' + hei);
+    var timingText, batSpeedText;
+    var currBeta, prevBeta, swingArray = [], timeStampArray = [], count = 0;
+    var stopRecording = true;
+    var swingArcGfx, tryAgainGfx;
+    var veryEarlyGfx, earlyGfx, perfectGfx, lateGfx, veryLateGfx, missedGfx;
+    // To store score values
+    var scoreArray = [];
+    var currBeta =0;
+    var prevBeta =0;
+    // For clicks count
+    //var buttonCount = 0;
+    $(document).ready(function() {
+
+        initSocketIO();
+        // Handler when the DOM is fully loaded
+        console.log('PIXI initialised!');
+
+        userid = generateRandomNumber(10);
+        username = chance.first();
+        console.log(userid + ' | ' + username);
+
+
+        $("#codeInput input").eq(0).focus();
+        $("#codeInput input").keyup(function() {
+            $(this).val($(this).val().toLowerCase());
+
+            uniqueCode = $("#one").val() + $("#two").val() + $("#three").val() + $("#four").val();
+            $("#codeInput input").eq(uniqueCode.length).focus();
+
+            console.log(uniqueCode);
+
+            if (uniqueCode.length == 4) {
+                $("#title").html('< CONNECTING >');
+                $("#codeInput").css('display', 'none');
+                initSocketIO();
+            }
+        });
+        //$("#five").val('0');
+        $("#ok").click(function() {
+            TweenMax.to($("#container"), 0.75, { left: wid * -1, ease: Cubic.easeInOut });
+            $("canvas").css('display', 'block');
+            TweenMax.to($("canvas"), 0.75, { left: 0, ease: Cubic.easeInOut });
+
+            setTimeout(function() {
+                socket.emit('nextBall');
+            }, 750);
+            
+        });
+
+        renderer = PIXI.autoDetectRenderer(wid, hei, { backgroundColor: 0xFFFFFF, transparent: false, antialias: true });
+        document.body.appendChild(renderer.view);
+
+        // create the root of the scene graph
+        stage = new PIXI.Container();
+        stage.position.x = wid/2;
+        stage.position.y = hei/2 - 40;
+
+        var hitAnalyzerGfx = new PIXI.Sprite.fromImage('images/hitAnalyzer.png');
+        hitAnalyzerGfx.position.x = 0;
+        hitAnalyzerGfx.position.y = 0;
+        hitAnalyzerGfx.anchor.x = 0.5;
+        hitAnalyzerGfx.anchor.y = 0.5;
+        stage.addChild(hitAnalyzerGfx);
+
+        var yPos = 86;
+
+        veryEarlyGfx = new PIXI.Sprite.fromImage('images/veryEarly.png');
+        veryEarlyGfx.position.x = 0; veryEarlyGfx.position.y = yPos; veryEarlyGfx.anchor.x = 0.5; veryEarlyGfx.anchor.y = 0.5;
+        veryEarlyGfx.alpha = 0;
+        stage.addChild(veryEarlyGfx);
+
+        earlyGfx = new PIXI.Sprite.fromImage('images/early.png');
+        earlyGfx.position.x = 0; earlyGfx.position.y = yPos; earlyGfx.anchor.x = 0.5; earlyGfx.anchor.y = 0.5;
+        earlyGfx.alpha = 0;
+        stage.addChild(earlyGfx);
+
+        perfectGfx = new PIXI.Sprite.fromImage('images/perfect.png');
+        perfectGfx.position.x = 0; perfectGfx.position.y = yPos; perfectGfx.anchor.x = 0.5; perfectGfx.anchor.y = 0.5;
+        perfectGfx.alpha = 0;
+        stage.addChild(perfectGfx);
+
+        lateGfx = new PIXI.Sprite.fromImage('images/late.png');
+        lateGfx.position.x = 0; lateGfx.position.y = yPos; lateGfx.anchor.x = 0.5; lateGfx.anchor.y = 0.5;
+        lateGfx.alpha = 0;
+        stage.addChild(lateGfx);
+
+        veryLateGfx = new PIXI.Sprite.fromImage('images/veryLate.png');
+        veryLateGfx.position.x = 0; veryLateGfx.position.y = yPos; veryLateGfx.anchor.x = 0.5; veryLateGfx.anchor.y = 0.5;
+        veryLateGfx.alpha = 0;
+        stage.addChild(veryLateGfx);
+
+        missedGfx = new PIXI.Sprite.fromImage('images/missed.png');
+        missedGfx.position.x = 0; missedGfx.position.y = yPos; missedGfx.anchor.x = 0.5; missedGfx.anchor.y = 0.5;
+        missedGfx.alpha = 0;
+        stage.addChild(missedGfx);
+
+        tryAgainGfx = new PIXI.Sprite.fromImage('images/tryAgain.png');
+        tryAgainGfx.interactive = true;
+
+        tryAgainGfx.on('pointerdown', function() {
+            // RESET
+            TweenMax.to(tryAgainGfx, 0.5, { alpha: 0, ease: Cubic.easeIn });
+
+            reset();
+        });
+
+        tryAgainGfx.position.x = 0; tryAgainGfx.position.y = 240; tryAgainGfx.anchor.x = 0.5; tryAgainGfx.anchor.y = 0.5;
+        tryAgainGfx.alpha = 0;
+        stage.addChild(tryAgainGfx);
+
+        var style = new PIXI.TextStyle({
+            fontFamily: 'Arial',
+            fontSize: 52,
+            fontWeight: 'bold',
+            fill: ['#FFFFFF', '#CCCCCC'], // gradient
+            stroke: '#333333',
+            strokeThickness: 5,
+            dropShadow: true,
+            dropShadowColor: '#999999',
+            dropShadowBlur: 10,
+            dropShadowAngle: Math.PI / 6,
+            dropShadowDistance: 2
+        });
+
+        batSpeedText = new PIXI.Text('0', style);
+        batSpeedText.x = 44;
+        batSpeedText.y = -48;
+        batSpeedText.anchor.x = batSpeedText.anchor.y = 0.5;
+
+        stage.addChild(batSpeedText);
+        console.log('batspeedText', batSpeedText);
+        /*
+        batSpeedText = new PIXI.Text('0 KMPH');
+        batSpeedText.anchor.x = 0.5;
+        batSpeedText.x = 0;
+        batSpeedText.y = 0;
+        stage.addChild(batSpeedText);
+        */
+        swingArcContainer = new PIXI.Container();
+
+        swingArcBackgroundGfx = new PIXI.Graphics();
+        swingArcBackgroundGfx.lineStyle(24, 0xffd900, 1);
+        swingArcBackgroundGfx.arc(0, 0, 150, -47 * (Math.PI/180), 227 * (Math.PI/180), false);
+
+        swingArcGfx = new PIXI.Graphics();
+        swingArcGfx.lineStyle(16, 0xffffff, 1);
+
+        swingArcContainer.addChild(swingArcBackgroundGfx);
+        swingArcContainer.addChild(swingArcGfx);
+        stage.addChild(swingArcContainer);
+
+        timingText = new PIXI.Text('0');
+        timingText.x = 0;
+        timingText.y = 200;
+        timingText.anchor.x = 0.5;
+        timingText.anchor.y = 0.5;
+        timingText.alpha = 0.2;
+        stage.addChild(timingText);
+
+        // start animating
+        animate();
+
+        // Hidden error messages on form
+        $('.error-message').css('visibility','hidden');
+    });
+
+    gyro.frequency = 10;
+    gyro.startTracking(function(o) {
+        currBeta = o.beta;
+        
+        if (currBeta > 90 && currBeta <= 180) {
+            currBeta = -360 + o.beta;
+        }
+        if (currBeta > 0 && currBeta <= 90) {
+             currBeta = -360 + o.beta;
+        }
+        currBeta -= 90;
+        currBeta += 360;
+
+        if (currBeta < 45)
+            currBeta = 45;
+        if (currBeta > 815)
+            currBeta = 815;
+        timingText.text = currBeta;
+        if (!stopRecording ) {//&& prevBeta != currBeta
+            swingArray.push(currBeta);
+            timeStampArray.push(currentServerTimestamp + (Date.now() - timestamp));
+            
+            //if(count==0){
+                //timingText.text = prevBeta +'='+ currBeta;
+                //prevBeta=0;
+                //if (currBeta >= 180) {
+                if (prevBeta <= 270 && currBeta >= 270) {
+                //if (prevBeta < 180 && currBeta >= 180 && count == 0) {
+                count = swingArray.length;
+                hitTimestamp = timeStampArray[timeStampArray.length - 1];
+                // console.log('count: ' + count);
+                console.log(hitTimestamp + ' | ' + currentServerTimestamp);
+                console.log(currentServerTimestamp - hitTimestamp + 5150);
+
+                var timing = currentServerTimestamp - hitTimestamp + 5150;
+                console.log('timing here', timing);
+                //timingText.text = timing;
+                //timingText.text = prevBeta+'='+ currBeta;
+                //timingText.text = timing+'/'+currBeta;
+                /*if (timing > -500 && timing <= -300) {
+                    veryLateGfx.alpha = 1;
+                    noRunArray();
+                }
+                 if (timing > -300 && timing <= -150) {
+                    lateGfx.alpha = 1;
+                    noRunArray();
+                }
+                 if (timing > -350 && timing < 150) {
+                    perfectGfx.alpha = 1;
+                    calculateScore(timing);
+                    timingText.text = timing;
+                }
+                 if (timing >= 150 && timing < 300) {
+                    earlyGfx.alpha = 1;
+                    noRunArray();
+                }
+                 if (timing >= 300 && timing < 500) {
+                    veryEarlyGfx.alpha = 1;
+                    noRunArray();
+                }
+                 if (timing <= -500 || timing >= 500) {
+                    missedGfx.alpha = 1;
+                    noRunArray();
+                }*/
+                //socket.emit('sco', timing);
+                //--
+
+                /*if(timing>5000){
+                    prevBeta =0;
+                    console.log('----->Entered the conditon---------');
+
+                }else if (timing > 1100 && timing <= 5000 ) {//1300
+                    veryEarlyGfx.alpha = 1;
+                    noRunArray();
+                }
+                else if (timing <= 1100 && timing >700) {
+                    earlyGfx.alpha = 1;
+                    noRunArray();
+                }*/
+                //timingText.text = currBeta+'+'+timing;
+                if (timing >= -800 && timing <=500) {
+                //if (timing >= 1500 && timing <=4000) {
+                    perfectGfx.alpha = 1;
+                    calculateScore(timing);
+                    stopRecording = true;
+                    
+                }
+                //else{
+                    //missedGfx.alpha = 1;
+                    //noRunArray();
+                //}
+            }
+            if (count > 0) {
+                //timingText.text = count;//swingArray[swingArray.length - 1] - swingArray[swingArray.length - 2];
+                // if (swingArray.length - count >= 10) {
+                // if (swingArray[swingArray.length - 1] < swingArray[swingArray.length - 2] || swingArray[swingArray.length - 1] > 315) {
+                if (Math.abs(swingArray[swingArray.length - 1] - swingArray[swingArray.length - 2]) <= 2 || swingArray[swingArray.length - 1] > 315) {
+                    swingArray.pop();
+                    timeStampArray.pop();
+                    //stopRecording = true;
+                    // console.log('swingArray.length: ' + swingArray.length);
+                    // console.log(swingArray);
+
+                    // DETECT SWING START
+                    for (var index = count; index > 0; index--) {
+                        // if (swingArray[index] < swingArray[index - 1] || swingArray[index] <= 45) {
+                        if (Math.abs(swingArray[index] - swingArray[index - 1]) <= 2 || swingArray[index] <= 45) {
+                            swingArray.splice(0, index);
+                            timeStampArray.splice(0, index);
+                        }
+                    }
+                    // console.log(swingArray);
+
+                    // swingArray.splice(0, swingArray.length - 20);
+                    // console.log('swingArray.length: ' + swingArray.length);
+                    /*
+                    var html = '';
+                    for (index = 0; index < swingArray.length; index++) {
+                        html += '<p>' + swingArray[index] + '</p>';
+                    }
+                    $("#info").append(html);
+                    */
+                    // console.log(swingArray[0] + ' | ' + swingArray[swingArray.length - 1]);
+                    // console.log(timeStampArray[0] + ' | ' + timeStampArray[timeStampArray.length - 1]);
+                    // console.log(timeStampArray[timeStampArray.length - 1] - timeStampArray[0]);
+
+                    //y
+                    var batRotation = swingArray[swingArray.length - 1] - swingArray[0];
+                    var time = timeStampArray[swingArray.length - 1] - timeStampArray[0]
+                    var batSpeed = (Math.round((batRotation/time) * 1000)) / 10;
+                    if (batSpeed > 75) {
+                        batSpeed = 75 - (Math.round((Math.random() * 5) * 10) / 10);
+                    }
+                    //batSpeedText.text = batSpeed;
+                    // console.log(batRotation + ' | ' + time + ' | ' + batSpeed + 'kmph');
+
+                    //y
+                    //swingArcGfx.arc(0, 0, 150, (swingArray[0] - 90) * (Math.PI/180), (swingArray[swingArray.length - 1] - 90) * (Math.PI/180), false);
+
+                    // RESET
+                    // setTimeout(reset, 5000);
+                }
+            }
+            prevBeta = currBeta;
+        }
+    });
+    counter = 1;
+    function reset() {
+
+        socket.emit('sco', scoreArray[counter-1]);
+        //prevBeta=0;
+        // alert("test");
+        counter = counter+1;
+        //alert(counter);
+        console.log('<<< RESET >>>');
+        swingArcGfx.clear();
+        swingArcGfx.lineStyle(16, 0xffffff, 1);
+
+        batSpeedText.text = '0';
+
+        veryEarlyGfx.alpha = earlyGfx.alpha = perfectGfx.alpha = lateGfx.alpha = veryLateGfx.alpha = missedGfx.alpha = 0;
+
+        swingArray = [];
+        timeStampArray = [];
+        count = 0;
+        // stopRecording = false;
+        if(counter < 7)
+        {
+            socket.emit('nextBall');
+
+        } else {
+            $('#playAgain').fadeIn();
+            console.log(scoreArray, 'stoppedEmission');
+            var total = 0;
+            for (var i = 0; i < scoreArray.length; i++)
+                {
+                    total += scoreArray[i];
+                }
+                console.log(total,'total');
+                $('#score-summary').html("<span>Your total score is " +total+ " run/runs</span>");
+        }
+        
+    }
+    $('#play-reset').click(function() {
+        $('#playAgain').css('display','none');
+        counter=1;
+        scoreArray=[];
+        reset();
+    });
+    $('#submit-score').click(function() {
+        $('#playAgain').fadeOut();
+        $('.loginOptions').fadeIn();
+    });
+    function animate() {
+        requestAnimationFrame(animate);
+
+        // render the container
+        renderer.render(stage);
+    }
+    function calculateScore(timeParam){
+        //timingText.text = timeParam;
+        if(timeParam <= 4000 && timeParam > 3500){
+            //socket.emit('sco', 6);
+            //alert('its a 6');
+            scoreArray.push(6);
+        } else if(timeParam <= 3500 && timeParam > 3000){
+            //socket.emit('sco', 4);
+            //alert('its a 4');
+            scoreArray.push(4);
+        } else if(timeParam <= 3000 && timeParam > 2500){
+            //socket.emit('sco', 3);
+            //alert('3 runs');
+            scoreArray.push(3);
+        } else if(timeParam <= 2500 && timeParam > 2000){
+            //socket.emit('sco', 2);
+            //alert('2 runs');
+            scoreArray.push(2);
+        } else if(timeParam <= 2000 && timeParam >= 1500){
+            //alert('1 run');
+            //socket.emit('sco', 1);
+            scoreArray.push(1);
+        }
+        console.log(scoreArray, 'calculateScore');
+    }
+    function noRunArray(){
+        socket.emit('sco', 0);
+        scoreArray.push(0);
+        console.log(scoreArray, 'noRunArray');
+    }
+
+    // On form submit
+    $('#submit-form').click(function(){
+        validateForm();
+    });
+
+    function validateForm(){
+        var nameReg = /^[A-Za-z]+$/;
+        var numberReg =  /^[0-9]+$/;
+        var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+
+        var name = $('#name-input').val();
+        var number = $('#number-input').val();
+        var email = $('#email-input').val();
+
+        if(name == '' || number == '' || email == ''){
+            alert('empty');
+        } else {
+            if(name.test(nameReg)){
+                console.log('matched');
+            } else{
+                console.log('no');
+            }
+        }
+        
+    }
+    // For facebook share
+    // document.getElementById('shareBtn').onclick = function() {
+    //     FB.ui({
+    //         method: 'share',
+    //         display: 'popup',
+    //         mobile_iframe: true,
+    //         href: 'https://developers.facebook.com/docs/',
+    //     }, function(response){});
+    //     }
+
+    //     // For fb login
+    //     document.getElementById('facebook-login').onclick = function() {
+    //     FB.login(function(response) {
+    //         if (response.authResponse) {
+    //         console.log('Welcome!  Fetching your information.... ');
+    //         FB.api('/me', function(response) {
+    //         console.log('Good to see you, ' + response.name + '.');
+    //         });
+    //         } else {
+    //         console.log('User cancelled login or did not fully authorize.');
+    //         }
+    //     });
+    //     }
+    </script>
+</body>
+</html>
