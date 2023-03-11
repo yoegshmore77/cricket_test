@@ -160,7 +160,7 @@
             TweenMax.to($("#countdownContainer"), 0.5, { opacity: 1, ease: Cubic.easeOut });
 
             var timestamp;
-            $.get("timestamp.php", function(data, status) {
+            $.get("https://www.vibrantjersey.je/ym/timestamp.php", function(data, status) {
                     timestamp = data +'|'+ ballCount;
 
                     console.log('<< Timestamp: ' + timestamp + ' >>');
