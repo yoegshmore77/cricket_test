@@ -617,7 +617,7 @@
         timingText.anchor.x = 0.5;
         timingText.anchor.y = 0.5;
         timingText.alpha = 1;
-        //timingText.style.color='white';
+        timingText.style.color='white';
         stage.addChild(timingText);
 
         // start animating
@@ -653,7 +653,8 @@
             timeStampArray.push(currentServerTimestamp + (Date.now() - timestamp));
 
             
-            //yogesh// timingText.text = Math.round(currentServerTimestamp - (timeStampArray[timeStampArray.length - 1])+6500)+'='+counter;
+            //yogesh// 
+		    timingText.text = Math.round(currentServerTimestamp - (timeStampArray[timeStampArray.length - 1])+6500)+'='+counter;
             if (prevBeta < 180 && currBeta >= 180) {
                 // && count == 0
                 count = swingArray.length;
