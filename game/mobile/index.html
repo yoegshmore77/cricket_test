@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +20,7 @@
     <link rel="stylesheet" type="text/css" href="css/slick.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
-    <script type="text/javascript" src="js/gyro.js"></script>
+    <script type="text/javascript" src="js/gyro.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.6/chance.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.6.0/socket.io.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
@@ -614,7 +613,7 @@
 
         timingText = new PIXI.Text('yogesh');
         timingText.x = 0;
-        timingText.y = 300;
+        timingText.y = 250;
         timingText.anchor.x = 0.5;
         timingText.anchor.y = 0.5;
         timingText.alpha = 1;
@@ -631,6 +630,7 @@
     gyro.frequency = 10;
     gyro.startTracking(function(o) {
         currBeta = o.beta;
+        timingText.text = currBeta;
 
         if (currBeta > 90 && currBeta <= 180) {
             currBeta = -360 + o.beta;
@@ -648,7 +648,7 @@
         
 
         // if (!stopRecording && prevBeta != currBeta) {
-            if (!stopRecording) {
+        if (!stopRecording) {
                 //timingText.text = currBeta;
             swingArray.push(currBeta);
             timeStampArray.push(currentServerTimestamp + (Date.now() - timestamp));
