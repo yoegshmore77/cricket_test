@@ -314,6 +314,7 @@
     </div>
     <script>
     var chance = new Chance();
+    //var url = 'http://localhost:8000/';
     var url = 'https://cricket-test.onrender.com/';
     var userid;
     var username;
@@ -611,9 +612,9 @@
         // swingArcContainer.addChild(swingArcGfx);
         // stage.addChild(swingArcContainer);
 
-        timingText = new PIXI.Text('0');
+        timingText = new PIXI.Text('yogesh');
         timingText.x = 0;
-        timingText.y = 200;
+        timingText.y = 300;
         timingText.anchor.x = 0.5;
         timingText.anchor.y = 0.5;
         timingText.alpha = 1;
@@ -654,7 +655,7 @@
 
             
             //yogesh// 
-		    timingText.text = Math.round(currentServerTimestamp - (timeStampArray[timeStampArray.length - 1])+6500)+'='+counter;
+            timingText.text = Math.round(currentServerTimestamp - (timeStampArray[timeStampArray.length - 1])+6500)+'='+counter;
             if (prevBeta < 180 && currBeta >= 180) {
                 // && count == 0
                 count = swingArray.length;
